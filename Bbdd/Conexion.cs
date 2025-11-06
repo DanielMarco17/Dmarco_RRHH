@@ -14,12 +14,8 @@ namespace DMarco_RRHH.Bbdd
     internal class Conexion
     {
         public static MySqlConnection conn;
-        public static string url = "Server=145.14.151.51; " +
-            "Database=u812167471_candidatos; " +
-            "User=u812167471_usercandidatos; " +
-            "port=3306; " +
-            "password=5n&BKAL9; " +
-            "Convert Zero Datetime=true";
+        public static string url = bbddConfig.GetConnectionString();
+
         public static MySqlConnection Conectar()
         {
             try
