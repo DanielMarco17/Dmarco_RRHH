@@ -124,8 +124,8 @@ namespace DMarco_RRHH.utilidades
 
         public static void LanzaAlertaCombo(ComboBox combo)
         {
-            MessageBox.Show($"Debe seleccionar una opción válida en {combo.Tag}", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            combo.BackColor = Color.LightCoral;
+            MessageBox.Show($"Debe seleccionar una opción válida en {combo.Tag}", "Validación", 
+                MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         // ==================== VALIDACIÓN DE FECHAS ====================

@@ -22,7 +22,7 @@ namespace DMarco_RRHH.Bbdd
             {
                 conn = new MySqlConnection(url);
                 conn.Open();
-                return conn;  // Devuelve la conexión abierta
+                return conn;
             }
             catch (MySqlException ex)
             {
@@ -507,12 +507,12 @@ namespace DMarco_RRHH.Bbdd
             {
                 Console.WriteLine("Error MySQL al obtener candidatos de almacén: " + ex.Message);
                 Console.WriteLine("Código de error: " + ex.Number);
-                return dt; // Retorna DataTable vacío en caso de error
+                return dt;
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error general al obtener candidatos de almacén: " + ex.Message);
-                return dt; // Retorna DataTable vacío en caso de error
+                return dt;
             }
             finally
             {
@@ -523,5 +523,215 @@ namespace DMarco_RRHH.Bbdd
             }
         }
 
+        public static CandidatoAdministracion ObtenerCandidatoAdministracion(string dni)
+        {
+            string consulta = @"SELECT nombre, apellidos, dni, fechaNacimiento, direccion, cp, 
+                localidad, telefono, email, foto, nivelEstudios, 
+                nivelInformaticaTexto, nivelInformaticaHojaCalculo, 
+                nivelInformaticainternet, observaciones, fechaAlta, registrador 
+                FROM candidatoadministracion 
+                WHERE dni = @dni";
+
+            using (MySqlConnection conn = new MySqlConnection(url))
+            {
+                try
+                {
+                    conn.Open();
+                    MySqlCommand cmd = new MySqlCommand(consulta, conn);
+                    cmd.Parameters.AddWithValue("@dni", dni);
+
+                    using (MySqlDataReader rs = cmd.ExecuteReader())
+                    {
+                        if (rs.Read())
+                        {
+                            byte[] fotoBytes = null;
+                            if (!rs.IsDBNull(rs.GetOrdinal("foto")))
+                            {
+                                long byteCount = rs.GetBytes(rs.GetOrdinal("foto"), 0, null, 0, 0);
+                                fotoBytes = new byte[byteCount];
+                                rs.GetBytes(rs.GetOrdinal("foto"), 0, fotoBytes, 0, (int)byteCount);
+                            }
+
+                            CandidatoAdministracion candidato = new CandidatoAdministracion
+                            {
+                                Dni = rs["dni"].ToString(),
+                                Nombre = rs["nombre"].ToString(),
+                                Apellidos = rs["apellidos"].ToString(),
+                                FechaNacimiento = Convert.ToDateTime(rs["fechaNacimiento"]),
+                                Direccion = rs["direccion"].ToString(),
+                                Cp = Convert.ToInt32(rs["cp"]),
+                                Localidad = rs["localidad"].ToString(),
+                                Tlfno = Convert.ToInt32(rs["telefono"]),
+                                Email = rs["email"].ToString(),
+                                Foto = fotoBytes,
+                                NivelEstudios = rs["nivelEstudios"].ToString(),
+                                NivelInformaticaTexto = rs["nivelInformaticaTexto"].ToString(),
+                                NivelInformaticaCalculo = rs["nivelInformaticaHojaCalculo"].ToString(),
+                                NivelInformaticaInternet = rs["nivelInformaticainternet"].ToString(),
+                                Observaciones = rs["observaciones"] != DBNull.Value ? rs["observaciones"].ToString() : "",
+                                FechaAlta = Convert.ToDateTime(rs["fechaAlta"]),
+                                UsuarioRegistrador = rs["registrador"].ToString()
+                            };
+
+                            return candidato;
+                        }
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    Console.WriteLine("Error MySQL al obtener candidato de administración: " + ex.Message);
+                    MessageBox.Show("Error al obtener datos del candidato: " + ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error general al obtener candidato de administración: " + ex.Message);
+                    MessageBox.Show("Error al obtener datos del candidato: " + ex.Message);
+                }
+            }
+            return null;
+        }
+
+        public static CandidatoAlmacen ObtenerCandidatoAlmacen(string dni)
+        {
+            string consulta = @"SELECT nombre, apellidos, dni, fechaNacimiento, direccion, cp, 
+                localidad, telefono, email, foto, nivelEstudios, 
+                carnetConducir, carnetCarretilla, carnetCamion, 
+                observaciones, fechaAlta, registrador 
+                FROM candidatoalmacen 
+                WHERE dni = @dni";
+
+            using (MySqlConnection conn = new MySqlConnection(url))
+            {
+                try
+                {
+                    conn.Open();
+                    MySqlCommand cmd = new MySqlCommand(consulta, conn);
+                    cmd.Parameters.AddWithValue("@dni", dni);
+
+                    using (MySqlDataReader rs = cmd.ExecuteReader())
+                    {
+                        if (rs.Read())
+                        {
+                            byte[] fotoBytes = null;
+                            if (!rs.IsDBNull(rs.GetOrdinal("foto")))
+                            {
+                                long byteCount = rs.GetBytes(rs.GetOrdinal("foto"), 0, null, 0, 0);
+                                fotoBytes = new byte[byteCount];
+                                rs.GetBytes(rs.GetOrdinal("foto"), 0, fotoBytes, 0, (int)byteCount);
+                            }
+
+                            CandidatoAlmacen candidato = new CandidatoAlmacen
+                            {
+                                Dni = rs["dni"].ToString(),
+                                Nombre = rs["nombre"].ToString(),
+                                Apellidos = rs["apellidos"].ToString(),
+                                FechaNacimiento = Convert.ToDateTime(rs["fechaNacimiento"]),
+                                Direccion = rs["direccion"].ToString(),
+                                Cp = Convert.ToInt32(rs["cp"]),
+                                Localidad = rs["localidad"].ToString(),
+                                Tlfno = Convert.ToInt32(rs["telefono"]),
+                                Email = rs["email"].ToString(),
+                                Foto = fotoBytes,
+                                NivelEstudios = rs["nivelEstudios"].ToString(),
+                                CarnetConducir = rs["carnetConducir"].ToString(),
+                                CarnetCarretilla = rs["carnetCarretilla"].ToString(),
+                                CarnetCamion = rs["carnetCamion"].ToString(),
+                                Observaciones = rs["observaciones"] != DBNull.Value ? rs["observaciones"].ToString() : "",
+                                FechaAlta = Convert.ToDateTime(rs["fechaAlta"]),
+                                UsuarioRegistrador = rs["registrador"].ToString()
+                            };
+
+                            return candidato;
+                        }
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    Console.WriteLine("Error MySQL al obtener candidato de almacén: " + ex.Message);
+                    MessageBox.Show("Error al obtener datos del candidato: " + ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error general al obtener candidato de almacén: " + ex.Message);
+                    MessageBox.Show("Error al obtener datos del candidato: " + ex.Message);
+                }
+            }
+            return null;
+        }
+
+        public static bool EliminarCandidatoAdministracion(string dni)
+        {
+            string consulta = "DELETE FROM candidatoadministracion WHERE dni = @dni";
+            MySqlConnection conn = new MySqlConnection(url);
+
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(consulta, conn);
+                cmd.Parameters.AddWithValue("@dni", dni);
+
+                int filasAfectadas = cmd.ExecuteNonQuery();
+
+                return filasAfectadas > 0;
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine("Error MySQL al eliminar candidato de administración: " + ex.Message);
+                Console.WriteLine("Código de error: " + ex.Number);
+                MessageBox.Show("Error al eliminar el candidato: " + ex.Message);
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error general al eliminar candidato de administración: " + ex.Message);
+                MessageBox.Show("Error al eliminar el candidato: " + ex.Message);
+                return false;
+            }
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                {
+                    conn.Close();
+                }
+            }
+        }
+
+        // Método para eliminar candidato de ALMACÉN
+        public static bool EliminarCandidatoAlmacen(string dni)
+        {
+            string consulta = "DELETE FROM candidatoalmacen WHERE dni = @dni";
+            MySqlConnection conn = new MySqlConnection(url);
+
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(consulta, conn);
+                cmd.Parameters.AddWithValue("@dni", dni);
+
+                int filasAfectadas = cmd.ExecuteNonQuery();
+
+                return filasAfectadas > 0;
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine("Error MySQL al eliminar candidato de almacén: " + ex.Message);
+                Console.WriteLine("Código de error: " + ex.Number);
+                MessageBox.Show("Error al eliminar el candidato: " + ex.Message);
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error general al eliminar candidato de almacén: " + ex.Message);
+                MessageBox.Show("Error al eliminar el candidato: " + ex.Message);
+                return false;
+            }
+            finally
+            {
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                {
+                    conn.Close();
+                }
+            }
+        }
     }
 }

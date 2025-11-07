@@ -125,6 +125,7 @@
     <Compile Include="modelo\Candidato.cs" />
     <Compile Include="modelo\CandidatoAdministracion.cs" />
     <Compile Include="modelo\CandidatoAlmacen.cs" />
+    <Compile Include="modelo\Email.cs" />
     <Compile Include="utilidades\Utilidades.cs" />
     <Compile Include="Vistas\AltaAdministracion.cs">
       <SubType>Form</SubType>
@@ -137,6 +138,18 @@
     </Compile>
     <Compile Include="Vistas\AltaAlmacen.Designer.cs">
       <DependentUpon>AltaAlmacen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\BuscarCandidato.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vistas\BuscarCandidato.Designer.cs">
+      <DependentUpon>BuscarCandidato.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\DatosMensaje.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vistas\DatosMensaje.Designer.cs">
+      <DependentUpon>DatosMensaje.cs</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Listados.cs">
       <SubType>Form</SubType>
@@ -152,6 +165,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Vistas\Mantenimiento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vistas\Mantenimiento.Designer.cs">
+      <DependentUpon>Mantenimiento.cs</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\Principal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -163,6 +182,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Vistas\AltaAlmacen.resx">
       <DependentUpon>AltaAlmacen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vistas\BuscarCandidato.resx">
+      <DependentUpon>BuscarCandidato.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vistas\DatosMensaje.resx">
+      <DependentUpon>DatosMensaje.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Vistas\Listados.resx">
       <DependentUpon>Listados.cs</DependentUpon>
@@ -179,6 +204,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Vistas\Mantenimiento.resx">
+      <DependentUpon>Mantenimiento.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Vistas\Principal.resx">
       <DependentUpon>Principal.cs</DependentUpon>
     </EmbeddedResource>

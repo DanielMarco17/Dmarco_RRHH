@@ -60,5 +60,11 @@ namespace DMarco_RRHH.Vistas
             Listados l = new Listados();
             l.Show();
         }
+
+        private void botonBuscar_Click(object sender, EventArgs e)
+        {
+            BuscarCandidato bc = new BuscarCandidato();
+            bc.Show();
+        }
     }
 }

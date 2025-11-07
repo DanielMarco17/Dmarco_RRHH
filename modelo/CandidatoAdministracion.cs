@@ -11,12 +11,11 @@ namespace DMarco_RRHH.modelo
         public string NivelInformaticaCalculo { get; set; }
         public string NivelInformaticaInternet { get; set; }
         public string NivelInformaticaTexto { get; set; }
-
         public CandidatoAdministracion() : base()
         {
         }
 
-        // Constructor con parámetros
+        // Constructor simple con los datos básicos
         public CandidatoAdministracion(string nombre, string apellidos, string dni) : base()
         {
             this.Nombre = nombre;
