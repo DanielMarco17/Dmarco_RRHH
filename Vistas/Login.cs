@@ -15,6 +15,7 @@ namespace DMarco_RRHH
         public Login()
         {
             InitializeComponent();
+            this.ActiveControl = botonEntrar;
         }
 
         private void label2_Click(object sender, EventArgs e)
