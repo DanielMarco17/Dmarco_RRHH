@@ -44,6 +44,7 @@ namespace DMarco_RRHH.Vistas
             this.campoFecha = new System.Windows.Forms.DateTimePicker();
             this.comboHora = new System.Windows.Forms.ComboBox();
             this.botonEnviarCorreo = new System.Windows.Forms.Button();
+            this.labelDebeHora = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -119,6 +120,7 @@ namespace DMarco_RRHH.Vistas
             this.comboHora.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboHora.FormattingEnabled = true;
             this.comboHora.Items.AddRange(new object[] {
+            "Seleccione",
             "9:00",
             "10:00",
             "11:00",
@@ -140,11 +142,23 @@ namespace DMarco_RRHH.Vistas
             this.botonEnviarCorreo.UseVisualStyleBackColor = true;
             this.botonEnviarCorreo.Click += new System.EventHandler(this.botonEnviarCorreo_Click);
             // 
+            // labelDebeHora
+            // 
+            this.labelDebeHora.AutoSize = true;
+            this.labelDebeHora.ForeColor = System.Drawing.Color.Red;
+            this.labelDebeHora.Location = new System.Drawing.Point(312, 193);
+            this.labelDebeHora.Name = "labelDebeHora";
+            this.labelDebeHora.Size = new System.Drawing.Size(135, 13);
+            this.labelDebeHora.TabIndex = 14;
+            this.labelDebeHora.Text = "Debe seleccionar una hora";
+            this.labelDebeHora.Visible = false;
+            // 
             // DatosMensaje
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(534, 311);
+            this.Controls.Add(this.labelDebeHora);
             this.Controls.Add(this.botonEnviarCorreo);
             this.Controls.Add(this.comboHora);
             this.Controls.Add(this.campoFecha);
@@ -179,7 +193,7 @@ namespace DMarco_RRHH.Vistas
         private System.Windows.Forms.DateTimePicker campoFecha;
         private System.Windows.Forms.ComboBox comboHora;
         private System.Windows.Forms.Button botonEnviarCorreo;
-        
+
 
         public void ConfigurarFecha()
         {
@@ -200,35 +214,39 @@ namespace DMarco_RRHH.Vistas
         {
             if (comboHora.SelectedIndex == 0)
             {
-                MessageBox.Show("Debe seleccionar una hora", "Validación",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                labelDebeHora.Visible = true;
+
             }
-
-            try
+            else
             {
-                string emailDestinatario = BuscarCandidato.emailCandidato;
-                string fecha = campoFecha.Value.ToString("dd/MM/yyyy");
-                string hora = comboHora.SelectedItem.ToString();
+                labelDebeHora.Visible = false;
+                try
+                {
+                    string emailDestinatario = BuscarCandidato.emailCandidato;
+                    string fecha = campoFecha.Value.ToString("dd/MM/yyyy");
+                    string hora = comboHora.SelectedItem.ToString();
 
-                Email email = new Email(
-                   asunto: "Convocatoria para entrevista de trabajo",
-                   destinatario: emailDestinatario,
-                   fecha: fecha,
-                   hora: hora
-               );
+                    Email email = new Email(
+                       asunto: "Convocatoria para entrevista de trabajo",
+                       destinatario: emailDestinatario,
+                       fecha: fecha,
+                       hora: hora
+                   );
 
-                email.EnviarCorreo();
+                    email.EnviarCorreo();
 
-                MessageBox.Show("Correo enviado correctamente", "Éxito",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Correo enviado correctamente", "Éxito",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                this.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
+
+        private Label labelDebeHora;
     }
 }
